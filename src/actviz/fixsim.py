@@ -7,22 +7,24 @@ The impending demise of the item in visual search.
 Behavioral and Brain Sciences, 40, E132.
 doi:10.1017/S0140525X15002794
 """
+from typing import NamedTuple
+
 import numpy as np
+
+
+class MaxItemsBySearchType(NamedTuple):
+    easy: int
+    medium: int
+    hard: int
 
 
 class VisSearchModel:
     """Model of a subject performing visual search tasks
 
     """
-    max_items_by_search_type = {
-        'easy': 30,
-        'medium': 7,
-        'hard': 1,
-    }
-
     def __init__(self,
-                 search_type,
                  min_items=1,
+                 max_items_by_search_type=MaxItemsBySearchType(30, 7, 1),
                  prev_patch_memory=4,
                  fixation_duration=250,
                  quit_threshold=0.85):
@@ -30,12 +32,13 @@ class VisSearchModel:
 
         Parameters
         ----------
-        search_type : str
-            One of {'easy', 'medium', 'hard'}. Used to determine
-            maximum number of items in functional visual field.
         min_items : int
             minimum number of items in functional visual field.
             Default is 1.
+        max_items_by_search_type : NamedTuple
+            Maps max_items to search type, e.g. 'easy' = 30.
+            Must be an instance of actviz.fixsim.MaxItemsBySearchType.
+            Default is MaxItemsBySearchType(30, 7, 1).
         prev_patch_memory : int
             Number of previous patches kept in memory. If a patch is
             in memory, it will not be revisited when selecting a new
@@ -54,11 +57,11 @@ class VisSearchModel:
         """
         self.search_type = search_type
         self.min_items = min_items
-        self.max_items = self.max_items_search_type[search_type]
-        self.fvf_vals = np.arange(self.min_items, self.max_items + 1)
+        self.max_items_by_search_type = max_items_by_search_type
         self.prev_patch_memory = prev_patch_memory
         self.fixation_duration = fixation_duration
         self.quit_threshold = quit_threshold
+        self.fvf_vals = None  # set by self.run_trials function
 
     def _select_new_patch(self, search_arr, fix_locs):
         """helper function to select a new patch to fixate,
