@@ -18,6 +18,17 @@ class MaxItemsBySearchType(NamedTuple):
     hard: int
 
 
+class Trial(NamedTuple):
+    """class that represents a visual search task trial;
+    returned after calling VisSearchModel.run_trial()"""
+    target_present: bool
+    reaction_time: int
+    seen_arr: np.ndarray
+    fix_locs: list
+    fvf_sizes: list
+    fvf_per_fix: list
+
+
 class VisSearchModel:
     """Model of a subject performing visual search tasks
 
