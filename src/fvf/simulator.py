@@ -35,6 +35,7 @@ class Simulator:
         self.display_sizes = display_sizes
         self.task_difficulties = task_difficulties
         self.target_presence = target_presence
+        self.target = target
 
     def run(self):
         """
