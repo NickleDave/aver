@@ -110,7 +110,7 @@ class FVFModel:
         """
         fix_loc = -1
         while fix_loc == -1:
-            fix_loc_tmp = np.random.choice(np.arange(len(search_arr) - 1))
+            fix_loc_tmp = np.random.choice(np.arange(len(search_arr)))
             if fix_loc_tmp not in fix_locs[-self.prev_patch_memory:]:
                 fix_loc = fix_loc_tmp
         return fix_loc

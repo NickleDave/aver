@@ -24,7 +24,7 @@ VERSION = '0.0.1a1'
 
 # What packages are required for this module to be executed?
 REQUIRED = [
-    'numpy', 'scipy', 'matplotlib', 'jupyterlab', 'nengo'
+    'numpy', 'scipy', 'matplotlib', 'jupyterlab', 'nengo', 'tqdm'
 ]
 
 # What packages are optional?
