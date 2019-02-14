@@ -43,22 +43,36 @@ class Simulator:
         Returns
         -------
 
+    def runall(self, fvf_params=None):
+        """run trials for all possible permutations of
+        conditions
+
+        Parameters
+        ----------
+        fvf_params : dict
+            of parameters for FVFModel, where key is parameter name, and
+            value is the value to pass to FVFModel when creating an instance
+            of the model. Default is None, in which case defaults for model are used.
+
+        Returns
+        -------
+        results : dict
+            where each key is tuple representing conditions, and the
+            value for each key is a list of all trials
         """
         results = {}
         for search_type in self.task_difficulties:
             print(f'Running trials for task_difficulty {search_type}')
             for display_size in self.display_sizes:
+                print(f'Running trials for display size {display_size}')
                 for target_present in self.target_presence:
-                    fvf = FVFModel()
-                    trials = []
+                    if fvf_params:
+                        fvf = FVFModel(**fvf_params)
+                    else:
+                        fvf = FVFModel()
 
-                    for trial_num in range(num_trials):
-                        search_arr = np.zeros((display_size,))
-                        if target_present:
-                            target_ind = np.random.choice(np.arange(display_size))
-                            search_arr[target_ind] = self.target
-                        trials.append(fvf.run_trial())
-
+                    trials = self._run_one_condition(fvf, search_type, display_size, target_present,
+                                                     self.target, self.trials_per_condition)
                     results[(search_type, display_size, target_present)] = trials
 
         return results
