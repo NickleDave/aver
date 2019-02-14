@@ -186,17 +186,27 @@ class VisSearchModel:
         responded = False
         reaction_time = 0
         fix_locs = []  # locations of fixations
+        fvf_sizes = []
+        fvf_per_fix = []
         seen_arr = np.zeros(search_arr.shape)
 
         while responded is False:
             fix_loc = self._select_new_patch(search_arr, fix_locs)
+            fix_locs.append(fix_loc)
             fvf_size = self._get_fvf_size()
-            target_present, seen_arr = self._fixate(search_arr,
-                                                    target,
-                                                    fix_loc,
-                                                    fvf_size,
-                                                    seen_arr)
+            fvf_sizes.append(fvf_size)
+            fvf, target_present, seen_arr = self._fixate(search_arr,
+                                                         target,
+                                                         fix_loc,
+                                                         fvf_size,
+                                                         seen_arr)
+            fvf_per_fix.append(fvf)
             reaction_time += self.fixation_duration
             if target_present or (np.sum(seen_arr) / seen_arr.shape > self.quit_threshold):
                 responded = True
-        return target_present, reaction_time
+        return Trial(target_present,
+                     reaction_time,
+                     seen_arr,
+                     fix_locs,
+                     fvf_sizes,
+                     fvf_per_fix)
