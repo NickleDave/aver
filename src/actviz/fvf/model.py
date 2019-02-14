@@ -29,9 +29,9 @@ class Trial(NamedTuple):
     fvf_per_fix: list
 
 
-class VisSearchModel:
+class FVFModel:
     """Model of a subject performing visual search tasks
-
+    within the fixation-based framework proposed by Hulleman & Olivers 2017.
     """
     def __init__(self,
                  min_items=1,
@@ -39,7 +39,7 @@ class VisSearchModel:
                  prev_patch_memory=4,
                  fixation_duration=250,
                  quit_threshold=0.85):
-        """__init__
+        """__init__ function
 
         Parameters
         ----------
