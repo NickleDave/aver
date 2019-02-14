@@ -8,3 +8,5 @@ The impending demise of the item in visual search.
 Behavioral and Brain Sciences, 40, E132.
 doi:10.1017/S0140525X15002794
 """
+from .model import FVFModel
+from .simulator import Simulator
