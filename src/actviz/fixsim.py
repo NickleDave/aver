@@ -158,9 +158,9 @@ class VisSearchModel:
         fvf = search_arr[fix_loc:fix_loc + fvf_size]
         seen_arr[fix_loc:fix_loc + fvf_size] = True
         if target in fvf:
-            return True, seen_arr
+            return fvf, True, seen_arr
         else:
-            return False, seen_arr
+            return fvf, False, seen_arr
 
     def run_trial(self, search_type, search_arr, target=1):
         """run a single trial of visual search task
