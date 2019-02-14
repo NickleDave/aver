@@ -151,13 +151,32 @@ class VisSearchModel:
         else:
             return False, seen_arr
 
-    def run_trial(self, search_arr, target):
+    def run_trial(self, search_type, search_arr, target=1):
         """run a single trial of visual search task
+
+        Parameters
+        ----------
+        search_type : str
+            One of {'easy', 'medium', 'hard'}. Used to determine
+            maximum number of items in functional visual field.
+        search_arr : numpy.ndarray
+            Array that represent visual search stimulus with a set of
+            items.
+        target : int
+            target that subject searches for in visual search task.
+            Default is 1.
         """
+        if search_type not in {'easy', 'medium', 'hard'}:
+            raise ValueError('search_type must be one of: {\'easy\', \'medium\', \'hard\'}')
+        max_items = getattr(self.max_items_by_search_type, search_type)
+        # set possible fvf_vals used when drawing fvf_size for each fixation
+        self.fvf_vals = np.arange(self.min_items, max_items + 1)
+
         responded = False
         reaction_time = 0
         fix_locs = []  # locations of fixations
         seen_arr = np.zeros(search_arr.shape)
+
         while responded is False:
             fix_loc = self._select_new_patch(search_arr, fix_locs)
             fvf_size = self._get_fvf_size()
