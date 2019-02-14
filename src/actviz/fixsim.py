@@ -55,7 +55,22 @@ class VisSearchModel:
         -----
         Defaults are as in Hulleman Olivers 2017.
         """
-        self.search_type = search_type
+        if min_items < 0 or type(min_items) != int:
+            raise ValueError('min_items must be a non-negative integer')
+
+        if type(max_items_by_search_type) != MaxItemsBySearchType:
+            raise TypeError('max_items_by_search_type must be an instance of '
+                            'actviz.fixsim.MaxItemsBySearchType')
+
+        if prev_patch_memory < 0 or type(prev_patch_memory) != int:
+            raise ValueError('prev_patch_memory must be a non-negative integer')
+
+        if fixation_duration < 0 or type(fixation_duration) != int:
+            raise ValueError('fixation_duration must be a non-negative integer')
+
+        if quit_threshold < 0 or quit_threshold > 1:
+            raise ValueError('quit_threshold must be between 0 and 1')
+
         self.min_items = min_items
         self.max_items_by_search_type = max_items_by_search_type
         self.prev_patch_memory = prev_patch_memory
