@@ -1,5 +1,5 @@
 # aver
-active vision models, built with the [Nengo neural simulator](https://www.nengo.ai/),
+active vision models, built with the [Nengo neural simulator](https://www.nengo.ai/).
 
 ## installation
 
@@ -26,3 +26,4 @@ Current Opinion in Behavioral Sciences 11 (2016): 100-108.
 
 ### name
 ![definition of "a ver"](./doc/static/aver.png)
+(from <http://www.wordreference.com/>)
