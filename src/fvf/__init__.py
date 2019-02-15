@@ -10,3 +10,6 @@ doi:10.1017/S0140525X15002794
 """
 from .model import FVFModel
 from .simulator import Simulator
+from . import munge
+from . import plot
+
