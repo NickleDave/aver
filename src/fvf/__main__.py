@@ -4,11 +4,13 @@ import json
 import os
 import logging
 
+import numpy as np
 
 from .simulator import Simulator
 
 
 def get_parser():
+    """returns instance of ArgumentParser, used for command-line interface by main function below"""
     parser = argparse.ArgumentParser(description='Run simulations of fixation-based framework.')
     parser.add_argument('results_dir', type=str, help='name of directory where results should be saved')
     parser.add_argument('loglevel', nargs='?', default='INFO', choices=('INFO', 'DEBUG', 'WARNING'),
@@ -19,6 +21,7 @@ def get_parser():
 
 
 def main():
+    """main function run from command line"""
     parser = get_parser()
     args = parser.parse_args()
 
@@ -30,6 +33,8 @@ def main():
         os.makedirs(args.results_dir)
 
     logger.info('starting simulation')
+    logger.info(f'setting numpy RNG seed to {args.seed}')
+    np.random.seed(args.seed)
     sim = Simulator()
     results = sim.runall()
 
