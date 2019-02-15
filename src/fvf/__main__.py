@@ -33,9 +33,8 @@ def main():
         os.makedirs(args.results_dir)
 
     logger.info('starting simulation')
-    logger.info(f'setting numpy RNG seed to {args.seed}')
-    np.random.seed(args.seed)
-    sim = Simulator()
+    logger.info(f'will set numpy RNG seed to {args.seed}')
+    sim = Simulator(seed=args.seed)
     results = sim.runall()
 
     results_pkl = os.path.join(args.results_dir, 'results.pickle')
