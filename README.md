@@ -1,2 +1,3 @@
-# active-vision-nengo
-Active vision models built with the Nengo neural simulator
+# aver
+Active Vision models, built with the [Nengo neural simulator](https://www.nengo.ai/),
+
