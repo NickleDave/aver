@@ -14,8 +14,8 @@ from shutil import rmtree
 from setuptools import find_packages, setup, Command
 
 # Package meta-data.
-NAME = 'actviz'
-DESCRIPTION = 'active vision models built with the Nengo neural simulator'
+NAME = 'aver'
+DESCRIPTION = 'Active Vision models, built with the Nengo neural simulator'
 URL = 'https://github.com/NickleDave/active-vision-nengo'
 EMAIL = 'nicholdav@gmail.com'
 AUTHOR = 'David Nicholson'
@@ -107,7 +107,7 @@ setup(
     packages=find_packages(where="src", exclude=('tests',)),
     package_dir={"": "src"},
     # entry_points={
-    #     'console_scripts': ['actviz=actviz.__main__:main'],
+    #     'console_scripts': ['aver=aver.__main__:main'],
     # },
     install_requires=REQUIRED,
     extras_require=EXTRAS,
