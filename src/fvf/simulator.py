@@ -92,8 +92,9 @@ class Simulator:
         for search_type in self.task_difficulties:
             print(f'Running trials for task_difficulty {search_type}')
             for display_size in self.display_sizes:
-                print(f'Running trials for display size {display_size}')
+                print(f'\tRunning trials for display size {display_size}')
                 for target_present in self.target_presence:
+                    print(f'\t\tRunning trials with target_present = {target_present}')
                     if fvf_params:
                         fvf = FVFModel(**fvf_params)
                     else:
