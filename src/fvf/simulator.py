@@ -21,7 +21,8 @@ class Simulator:
                  display_sizes=(6, 12, 18),
                  task_difficulties=('easy', 'medium', 'hard'),
                  target_presence=(True, False),
-                 target=1):
+                 target=1,
+                 seed=42):
         """__init__ method
 
         Parameters
@@ -31,12 +32,14 @@ class Simulator:
         task_difficulties
         target_presence
         target
+        seed
         """
         self.trials_per_condition = trials_per_condition
         self.display_sizes = display_sizes
         self.task_difficulties = task_difficulties
         self.target_presence = target_presence
         self.target = target
+        self.seed=seed
 
     @staticmethod
     def _run_one_condition(fvf_model, search_type, display_size, target_present, target=1, num_trials=10000):
