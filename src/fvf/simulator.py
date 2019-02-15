@@ -39,7 +39,7 @@ class Simulator:
         self.task_difficulties = task_difficulties
         self.target_presence = target_presence
         self.target = target
-        self.seed=seed
+        self.seed = seed
 
     @staticmethod
     def _run_one_condition(fvf_model, search_type, display_size, target_present, target=1, num_trials=10000):
@@ -91,6 +91,7 @@ class Simulator:
             where each key is tuple representing conditions, and the
             value for each key is a list of all trials
         """
+        np.random.seed(self.seed)
         results = {}
         for search_type in self.task_difficulties:
             print(f'Running trials for task_difficulty {search_type}')
