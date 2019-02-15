@@ -48,7 +48,7 @@ class FVFModel:
             Default is 1.
         max_items_by_search_type : NamedTuple
             Maps max_items to search type, e.g. 'easy' = 30.
-            Must be an instance of actviz.fixsim.MaxItemsBySearchType.
+            Must be an instance of fvf.model.MaxItemsBySearchType.
             Default is MaxItemsBySearchType(30, 7, 1).
         prev_patch_memory : int
             Number of previous patches kept in memory. If a patch is
@@ -71,7 +71,7 @@ class FVFModel:
 
         if type(max_items_by_search_type) != MaxItemsBySearchType:
             raise TypeError('max_items_by_search_type must be an instance of '
-                            'actviz.fixsim.MaxItemsBySearchType')
+                            'aver.fixsim.MaxItemsBySearchType')
 
         if prev_patch_memory < 0 or type(prev_patch_memory) != int:
             raise ValueError('prev_patch_memory must be a non-negative integer')
