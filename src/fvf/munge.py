@@ -108,7 +108,7 @@ def reaction_times(rt_json):
         rt_arr = np.asarray(val)
         RTs_by_condition[tup_key] = rt_arr # convert to s
         mean_RTs_by_condition[tup_key] = np.mean(rt_arr)
-        std_RTs_by_condition = np.std(rt_arr)
+        std_RTs_by_condition[tup_key] = np.std(rt_arr)
 
     search_types = tuple(set(search_types))
     display_sizes = tuple(set(display_sizes))
