@@ -229,9 +229,11 @@ class FVFModel:
             reaction_time += self.fixation_duration
             if response or (np.sum(seen_arr) / seen_arr.shape > self.quit_threshold):
                 responded = True
+            num_fixations = len(fix_locs)
         return Trial(response,
                      reaction_time,
                      seen_arr,
+                     num_fixations,
                      fix_locs,
                      fvf_sizes,
                      fvf_per_fix)
