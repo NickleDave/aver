@@ -110,8 +110,11 @@ def reaction_times(rt_json):
         mean_RTs_by_condition[tup_key] = np.mean(rt_arr)
         std_RTs_by_condition[tup_key] = np.std(rt_arr)
 
-    search_types = tuple(set(search_types))
-    display_sizes = tuple(set(display_sizes))
+    search_types = tuple((set(search_types)))
+    display_sizes = tuple(
+        sorted(  # sorted, so display_sizes is in ascending numerical order
+            set(display_sizes)
+        ))
     target_present = tuple(set(target_present))
 
     mean_RTs_all_display_sizes = {}
