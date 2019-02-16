@@ -39,7 +39,7 @@ class RTResults(NamedTuple):
         for all display sizes. Dict where key has form (search type, is target present),
         and the corresponding value is a numpy array of mean reaction times, with each
         element corresponding to one display size from display_sizes.
-    mean_RT_regress_results: dict
+    mean_RTs_regress_results: dict
         Results of performing linear regression on reaction times v. display size for
         each item in mean-RTs_all_display_sizes
     std_RTs_all_display_sizes: dict
@@ -54,7 +54,7 @@ class RTResults(NamedTuple):
     mean_RTs_by_condition: dict
     std_RTs_by_condition: dict
     mean_RTs_all_display_sizes: dict
-    mean_RT_regress_results: dict
+    mean_RTs_regress_results: dict
     std_RTs_all_display_sizes: dict
 
 
@@ -115,7 +115,7 @@ def reaction_times(rt_json):
     target_present = tuple(set(target_present))
 
     mean_RTs_all_display_sizes = {}
-    mean_RT_regress_results = {}
+    mean_RTs_regress_results = {}
     std_RTs_all_display_sizes = {}
     # even more munging
     for search_type in search_types:
@@ -134,7 +134,7 @@ def reaction_times(rt_json):
             slope, intercept, r_value, p_value, std_err = stats.linregress(display_sizes,
                                                                            mean_RT_vals)
             regress_result = LinRegressResults(slope, intercept, r_value, p_value, std_err)
-            mean_RT_regress_results[key] = regress_result
+            mean_RTs_regress_results[key] = regress_result
             std_RT_vals = np.asarray(std_RT_vals)
             std_RTs_all_display_sizes[key] = std_RT_vals
 
@@ -146,5 +146,5 @@ def reaction_times(rt_json):
                      mean_RTs_by_condition,
                      std_RTs_by_condition,
                      mean_RTs_all_display_sizes,
-                     mean_RT_regress_results,
+                     mean_RTs_regress_results,
                      std_RTs_all_display_sizes)
