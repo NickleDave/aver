@@ -337,7 +337,7 @@ def num_fixations(nf_json):
             mean_num_fixations_vals = []
             for display_size in display_sizes:
                 condition_tup = tuple([search_type, display_size, is_target_present])
-                mean_val = mean_RTs_by_condition[condition_tup]
+                mean_val = mean_num_fixations_by_condition[condition_tup]
                 mean_num_fixations_vals.append(mean_val)
             key = tuple([search_type, is_target_present])
             mean_num_fixations_vals = np.asarray(mean_num_fixations_vals)
