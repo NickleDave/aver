@@ -80,10 +80,13 @@ class LinRegressResults(NamedTuple):
     std_err: float
 
 
-def reaction_times(rt_json):
+def reaction_times(rt_json, responses_json):
     """munge results from a reaction_times.json file into format for plotting"""
     with open(rt_json) as fp:
         RTs = json.load(fp)
+
+    with open(responses_json) as fp:
+        responses = json.load(fp)
 
     search_types = []
     display_sizes = []
@@ -94,21 +97,26 @@ def reaction_times(rt_json):
     std_RTs_by_condition = {}
     for key, val in RTs.items():
         # convert text key back into Python types
-        split_key = key.split(',')  # split_key[0] will be search type, {'easy', 'medium' 'hard'}
-        split_key[1] = int(split_key[1])  # display size, an int
-        split_key[2] = bool(strtobool(split_key[2].strip()))  # target present, Boolean
+        split_key = key.split(',')
+        search_type = split_key[0]
+        display_size = int(split_key[1])
+        is_target_present = bool(strtobool(split_key[2].strip()))
 
         # add to conditions that will be returned
-        search_types.append(split_key[0])
-        display_sizes.append(split_key[1])
-        target_present.append(split_key[2])
+        search_types.append(search_type)
+        display_sizes.append(display_size)
+        target_present.append(is_target_present)
 
-        tup_key = tuple(split_key)
+        tup_key = tuple([search_type, display_size, is_target_present])
         conditions.append(tup_key)
         rt_arr = np.asarray(val)
-        RTs_by_condition[tup_key] = rt_arr # convert to s
-        mean_RTs_by_condition[tup_key] = np.mean(rt_arr)
-        std_RTs_by_condition[tup_key] = np.std(rt_arr)
+        RTs_by_condition[tup_key] = rt_arr
+
+        # keep only correct trials, as in Young Hulleman 2013
+        response_arr = np.asarray(responses[key])
+        RTs_to_use = np.equal(response_arr, is_target_present)
+        mean_RTs_by_condition[tup_key] = np.mean(rt_arr[RTs_to_use])
+        std_RTs_by_condition[tup_key] = np.std(rt_arr[RTs_to_use])
 
     search_types = tuple((set(search_types)))
     display_sizes = tuple(
