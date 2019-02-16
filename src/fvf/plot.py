@@ -1,4 +1,3 @@
-import numpy as np
 import matplotlib.pyplot as plt
 
 SEARCH_TYPE_MARKERS = {
@@ -7,7 +6,7 @@ SEARCH_TYPE_MARKERS = {
     'hard': "o",
 }
 
-SEARCH_TYPE_YLIMS = {
+RT_SEARCH_TYPE_YLIMS = {
     'easy': (0, 8000),
     'medium': (0, 8000),
     'hard': (0, 8000),
@@ -16,6 +15,12 @@ SEARCH_TYPE_YLIMS = {
 TARGET_FILL = {
     True: 'full',
     False: 'none',
+}
+
+NUM_FIX_SEARCH_TYPE_YLIMS = {
+    'easy': (0, 35),
+    'medium': (0, 35),
+    'hard': (0, 35),
 }
 
 
@@ -55,9 +60,11 @@ def mean_reaction_times(mean_RTs_all_display_sizes,
             ax[row_ind].text(display_sizes[-1] + 0.2, mean_RT_arr[-1], slope)
             ax[row_ind].spines["top"].set_visible(False)
             ax[row_ind].spines["right"].set_visible(False)
-            ax[row_ind].set_ylim(SEARCH_TYPE_YLIMS[search_type])
+            ax[row_ind].set_ylim(RT_SEARCH_TYPE_YLIMS[search_type])
             ax[row_ind].set_xticks(display_sizes)
             ax[row_ind].legend(loc='upper left')
+            ax[row_ind].set_ylabel('reaction time (ms)')
+    ax[-1].set_xlabel('display size (number of items)')
     fig.set_size_inches(figsize_inches)
     fig.tight_layout()
 
@@ -94,8 +101,50 @@ def standard_devs(std_RTs_all_display_sizes,
                              label=label)
             ax[row_ind].spines["top"].set_visible(False)
             ax[row_ind].spines["right"].set_visible(False)
-            ax[row_ind].set_ylim(SEARCH_TYPE_YLIMS[search_type])
+            ax[row_ind].set_ylim(RT_SEARCH_TYPE_YLIMS[search_type])
             ax[row_ind].set_xticks(display_sizes)
             ax[row_ind].legend(loc='upper left')
+            ax[row_ind].set_ylabel('reaction time (ms)')
+    ax[-1].set_xlabel('display size (number of items)')
+    fig.set_size_inches(figsize_inches)
+    fig.tight_layout()
+
+
+def mean_num_fixations(mean_num_fixations_all_display_sizes,
+                       search_types=('easy', 'medium', 'hard'),
+                       display_sizes=(6, 12, 18),
+                       target_present=(True, False),
+                       figsize_inches=(6, 10)):
+    """plots mean reaction times
+
+    Parameters
+    ----------
+    mean_num_fixations_all_display_sizes : dict
+    search_types : tuple
+    display_sizes : tuple
+    target_present : tuple
+    figsize_inches : tuple
+    """
+    rows = len(search_types)
+    fig, ax = plt.subplots(rows, 1)
+    for row_ind, search_type in enumerate(search_types):
+        for is_target_present in target_present:
+            key = (search_type, is_target_present)
+            mean_nf_arr = mean_num_fixations_all_display_sizes[key]
+            if is_target_present:
+                label = f'{search_type}, target present'
+            else:
+                label = f'{search_type}, target absent'
+            ax[row_ind].plot(display_sizes, mean_nf_arr,
+                             marker=SEARCH_TYPE_MARKERS[search_type],
+                             fillstyle=TARGET_FILL[is_target_present],
+                             label=label)
+            ax[row_ind].spines["top"].set_visible(False)
+            ax[row_ind].spines["right"].set_visible(False)
+            ax[row_ind].set_ylim(NUM_FIX_SEARCH_TYPE_YLIMS[search_type])
+            ax[row_ind].set_xticks(display_sizes)
+            ax[row_ind].legend(loc='upper left')
+            ax[row_ind].set_ylabel('number of fixations')
+    ax[-1].set_xlabel('display size (number of items)')
     fig.set_size_inches(figsize_inches)
     fig.tight_layout()
