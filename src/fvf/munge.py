@@ -6,6 +6,22 @@ import numpy as np
 from scipy import stats
 
 
+def fixations(results_pkl):
+    """munge fixation data from a results.pickle file
+
+    Parameters
+    ----------
+    results_pkl : str
+        path to a results.pickle file
+
+    Returns
+    -------
+    FixationResults : NamedTuple
+
+    """
+    return fixation_results
+
+
 class RTResults(NamedTuple):
     """NamedTuple that represents reaction time results
     from running simulation with FVF framework.
