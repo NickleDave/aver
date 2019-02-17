@@ -42,17 +42,35 @@ def main():
     with open(results_pkl, 'wb') as fp:
         pickle.dump(results, fp)
 
-    # munge reaction times
+    # get reaction times, number of fixations, and responses out of results
+    # then dump into .json files
     logger.info('getting just reaction times out of {results_pkl}')
-    reaction_times = {}
+    reaction_times_by_condition = {}
+    num_fixations_by_condition = {}
+    responses_by_condition = {}
     for (search_type, display_size, target_present), trials in results.items():
         RTs = [trial.reaction_time for trial in trials]
-        key = ', '.join([search_type, str(display_size), str(target_present)])
-        reaction_times[key] = RTs
+        responses = [trial.response for trial in trials]
+        num_fix = [trial.num_fixations for trial in trials]
+        condition = ', '.join([search_type, str(display_size), str(target_present)])
+        reaction_times_by_condition[condition] = RTs
+        num_fixations_by_condition[condition] = num_fix
+        responses_by_condition[condition] = responses
+
     rt_json = os.path.join(args.results_dir, 'reaction_times.json')
     logger.info(f'saving reaction times in {rt_json}')
     with open(rt_json, 'w') as fp:
-        json.dump(reaction_times, fp)
+        json.dump(reaction_times_by_condition, fp)
+
+    nf_json = os.path.join(args.results_dir, 'num_fixations.json')
+    logger.info(f'saving number of fixations in {nf_json}')
+    with open(nf_json, 'w') as fp:
+        json.dump(num_fixations_by_condition, fp)
+
+    r_json = os.path.join(args.results_dir, 'responses.json')
+    logger.info(f'saving responses in {r_json}')
+    with open(r_json, 'w') as fp:
+        json.dump(responses_by_condition, fp)
 
 
 if __name__ == '__main__':

@@ -20,10 +20,30 @@ class MaxItemsBySearchType(NamedTuple):
 
 class Trial(NamedTuple):
     """class that represents a visual search task trial;
-    returned after calling VisSearchModel.run_trial()"""
-    target_present: bool
+    returned after calling VisSearchModel.run_trial()
+
+    Fields
+    ------
+    response: bool
+        True if subject responds that target is present,
+        False if subject responds that target is absent.
+    reaction_time: int
+        in units of milliseconds
+    seen_arr: np.ndarray
+        elements that are True were seeing during the series of fixations
+    num_fixations: int
+        number of fixations
+    fix_locs: list
+        locations of fixations
+    fvf_sizes: list
+        size of fvf for each fixation
+    fvf_per_fix: list
+        actual "contents" of fvf for each fixation
+    """
+    response: bool
     reaction_time: int
     seen_arr: np.ndarray
+    num_fixations: int
     fix_locs: list
     fvf_sizes: list
     fvf_per_fix: list
@@ -145,9 +165,14 @@ class FVFModel:
 
         Returns
         -------
-        target_present : bool
+        fvf: numpy.ndarray
+            actual field seen, i.e., search_arr[fix_loc:fix_loc + fvf_size]
+        response : bool
             True if target in functional visual field that is found by
             "fixating" (indexing into search_arr). False otherwise.
+        seen_arr : numpy.ndarray
+            As in Parameters section above, but updated to reflect this
+            fixation.
 
         Notes
         -----
@@ -195,18 +220,20 @@ class FVFModel:
             fix_locs.append(fix_loc)
             fvf_size = self._get_fvf_size()
             fvf_sizes.append(fvf_size)
-            fvf, target_present, seen_arr = self._fixate(search_arr,
-                                                         target,
-                                                         fix_loc,
-                                                         fvf_size,
-                                                         seen_arr)
+            fvf, response, seen_arr = self._fixate(search_arr,
+                                                   target,
+                                                   fix_loc,
+                                                   fvf_size,
+                                                   seen_arr)
             fvf_per_fix.append(fvf)
             reaction_time += self.fixation_duration
-            if target_present or (np.sum(seen_arr) / seen_arr.shape > self.quit_threshold):
+            if response or (np.sum(seen_arr) / seen_arr.shape > self.quit_threshold):
                 responded = True
-        return Trial(target_present,
+            num_fixations = len(fix_locs)
+        return Trial(response,
                      reaction_time,
                      seen_arr,
+                     num_fixations,
                      fix_locs,
                      fvf_sizes,
                      fvf_per_fix)
