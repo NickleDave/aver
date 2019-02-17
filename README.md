@@ -21,6 +21,12 @@ Behavioral and Brain Sciences, 40, E132. doi:10.1017/S0140525X15002794
 Current Opinion in Behavioral Sciences 11 (2016): 100-108.
 <https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6116896/>
 
+For a brief introduction to active vision models, and how they relate to the typical tasks 
+used to investigate visual search in the laboratory, please see 
+[this notebook](./doc/notebooks/fvf-model-results.ipynb). The notebook contains results 
+from a replication of an active vision-type model described in the Hulleman and Olivers 
+commentary cited above.
+
 ### license
 [BSD](./LICENSE)
 
