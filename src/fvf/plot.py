@@ -6,10 +6,16 @@ SEARCH_TYPE_MARKERS = {
     'hard': "o",
 }
 
-RT_SEARCH_TYPE_YLIMS = {
+MN_RT_SEARCH_TYPE_YLIMS = {
     'easy': (0, 8000),
     'medium': (0, 8000),
     'hard': (0, 8000),
+}
+
+STD_RT_SEARCH_TYPE_YLIMS = {
+    'easy': (0, 2500),
+    'medium': (0, 2500),
+    'hard': (0, 2500),
 }
 
 TARGET_FILL = {
@@ -60,7 +66,7 @@ def mean_reaction_times(mean_RTs_all_display_sizes,
             ax[row_ind].text(display_sizes[-1] + 0.2, mean_RT_arr[-1], slope)
             ax[row_ind].spines["top"].set_visible(False)
             ax[row_ind].spines["right"].set_visible(False)
-            ax[row_ind].set_ylim(RT_SEARCH_TYPE_YLIMS[search_type])
+            ax[row_ind].set_ylim(MN_RT_SEARCH_TYPE_YLIMS[search_type])
             ax[row_ind].set_xticks(display_sizes)
             ax[row_ind].legend(loc='upper left')
             ax[row_ind].set_ylabel('reaction time (ms)')
@@ -101,7 +107,7 @@ def standard_devs(std_RTs_all_display_sizes,
                              label=label)
             ax[row_ind].spines["top"].set_visible(False)
             ax[row_ind].spines["right"].set_visible(False)
-            ax[row_ind].set_ylim(RT_SEARCH_TYPE_YLIMS[search_type])
+            ax[row_ind].set_ylim(STD_RT_SEARCH_TYPE_YLIMS[search_type])
             ax[row_ind].set_xticks(display_sizes)
             ax[row_ind].legend(loc='upper left')
             ax[row_ind].set_ylabel('reaction time (ms)')
