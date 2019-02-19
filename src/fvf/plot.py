@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+import numpy as np
 
 SEARCH_TYPE_MARKERS = {
     'easy': 's',
@@ -152,5 +153,72 @@ def mean_num_fixations(mean_num_fixations_all_display_sizes,
             ax[row_ind].legend(loc='upper left')
             ax[row_ind].set_ylabel('number of fixations')
     ax[-1].set_xlabel('display size (number of items)')
+    fig.set_size_inches(figsize_inches)
+    fig.tight_layout()
+
+RT_DISTRIB_XLIMS = {
+    'easy': (0, 2000),
+    'medium': (0, 6000),
+    'hard': (0, 12000),
+}
+
+
+def reaction_times_distrib(RTs_by_condition,
+                           search_types=('easy', 'medium', 'hard'),
+                           display_sizes=(6, 12, 18),
+                           target_present=(True, False),
+                           figsize_inches=(6, 10)):
+    """plot distribution of reaction times
+
+    Parameters
+    ----------
+    RTs_by_condition : dict
+    search_types : tuple
+    display_sizes : tuple
+    target_present : tuple
+    figsize_inches : tuple
+    """
+    RTs_all_display_sizes = {}
+    # do yet more munging before plot
+    for search_type in search_types:
+        for is_target_present in target_present:
+            RT_arrs = []
+            for display_size in display_sizes:
+                condition_tup = tuple([search_type, display_size, is_target_present])
+                RT_arr = RTs_by_condition[condition_tup]
+                RT_arrs.append(RT_arr)
+            key = tuple([search_type, is_target_present])
+            RTs_all_display_sizes[key] = RT_arrs
+
+    rows = len(search_types)
+    fig, ax = plt.subplots(rows, 1)
+    for row_ind, search_type in enumerate(search_types):
+        for is_target_present in target_present:
+            key = (search_type, is_target_present)
+            RT_arrs = RTs_all_display_sizes[key]
+            for display_size, RT_arr in zip(display_sizes, RT_arrs):
+                if is_target_present:
+                    label = f'{search_type}, {display_size} items, target present'
+                    linestyle = '-'
+                else:
+                    label = f'{search_type}, {display_size} items, target absent'
+                    linestyle = '--'
+                binedges = np.arange(0, 12001, 250)
+                counts = np.histogram(RT_arr, bins=binedges)[0]
+                # Normalize using total number of observations, which is what I
+                # think both Hulleman Olivers + Wolfe do.
+                # Note that we would need to use density=True if we wanted to
+                # normalize such that we model a probability density function.
+                counts = counts / RT_arr.shape[0]
+                ax[row_ind].plot(binedges[:-1], counts,
+                                 linestyle=linestyle,
+                                 label=label)
+            ax[row_ind].spines["top"].set_visible(False)
+            ax[row_ind].spines["right"].set_visible(False)
+            ax[row_ind].set_ylim([0, 1.1])
+            #ax[row_ind].set_xlim(RT_DISTRIB_XLIMS[search_type])
+            ax[row_ind].legend(loc='upper right')
+            ax[row_ind].set_ylabel('Frequency')
+    ax[-1].set_xlabel('reaction times (250 ms bins)')
     fig.set_size_inches(figsize_inches)
     fig.tight_layout()
