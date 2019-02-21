@@ -1,3 +1,4 @@
+import matplotlib as mpl
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -31,12 +32,24 @@ NUM_FIX_SEARCH_TYPE_YLIMS = {
 }
 
 
+mpl.style.use('bmh')
+
+plt.rcParams['font.size'] = 18
+plt.rcParams['axes.labelsize'] = 18
+plt.rcParams['axes.labelweight'] = 'regular'
+plt.rcParams['axes.titlesize'] = 20
+plt.rcParams['xtick.labelsize'] = 16
+plt.rcParams['ytick.labelsize'] = 16
+plt.rcParams['legend.fontsize'] = 14
+plt.rcParams['figure.titlesize'] = 20
+
+
 def mean_reaction_times(mean_RTs_all_display_sizes,
                         mean_RTs_regress_results,
                         search_types=('easy', 'medium', 'hard'),
                         display_sizes=(6, 12, 18),
                         target_present=(True, False),
-                        figsize_inches=(6, 10)):
+                        figsize_inches=(7.5, 10)):
     """plots mean reaction times
 
     Parameters
@@ -64,7 +77,7 @@ def mean_reaction_times(mean_RTs_all_display_sizes,
                              fillstyle=TARGET_FILL[is_target_present],
                              label=label)
             slope = f'{regress_results.slope:.2f} ms/item'
-            ax[row_ind].text(display_sizes[-1] + 0.2, mean_RT_arr[-1], slope)
+            ax[row_ind].text(display_sizes[-1] + 0.4, mean_RT_arr[-1] - 0.2, slope)
             ax[row_ind].spines["top"].set_visible(False)
             ax[row_ind].spines["right"].set_visible(False)
             ax[row_ind].set_ylim(MN_RT_SEARCH_TYPE_YLIMS[search_type])
