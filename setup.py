@@ -20,7 +20,7 @@ URL = 'https://github.com/NickleDave/active-vision-nengo'
 EMAIL = 'nicholdav@gmail.com'
 AUTHOR = 'David Nicholson'
 REQUIRES_PYTHON = '>=3.6.0'
-VERSION = '0.0.1a1'
+VERSION = '0.1.0a1'
 
 # What packages are required for this module to be executed?
 REQUIRED = [
