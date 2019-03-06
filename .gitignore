@@ -1,6 +1,11 @@
+# config and build ephemera
 .ipynb_checkpoints/
 .idea
 */__pycache__/*
 __pycache__/
 *.egg-info/
+build/
+dist/
+
+# data
 results/
