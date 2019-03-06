@@ -31,5 +31,7 @@ commentary cited above.
 [BSD](./LICENSE)
 
 ### name
-![definition of "a ver"](./doc/static/aver.png)
-(from <http://www.wordreference.com/>)
+![definition of "a ver"](./doc/static/aver.png)  
+(from <http://www.wordreference.com/>)  
+<https://youtu.be/ENrgKe9vIyQ>  
+<http://www.pirouzu.net/lyrics-main/runners-high/tashikame-ni-yukou-t/>  
