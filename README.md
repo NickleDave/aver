@@ -30,8 +30,15 @@ commentary cited above.
 ### license
 [BSD](./LICENSE)
 
+## Acknowledgments
+- Research funded by the Lifelong Learning Machines program, 
+DARPA/Microsystems Technology Office, 
+DARPA cooperative agreement HR0011-18-2-0019
+- Accepted proposal to 2019 Nengo summer school
+
 ### name
 ![definition of "a ver"](./doc/static/aver.png)  
 (from <http://www.wordreference.com/>)  
 <https://youtu.be/ENrgKe9vIyQ>  
 <http://www.pirouzu.net/lyrics-main/runners-high/tashikame-ni-yukou-t/>  
+
